@@ -1,0 +1,34 @@
+{
+  "name": "@disk-analyzer/napi",
+  "version": "0.1.0",
+  "description": "Node native binding for the DiskAnalyzer Rust core engine (napi-rs).",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "index.js",
+  "types": "index.d.ts",
+  "napi": {
+    "name": "disk-analyzer-napi",
+    "package": {
+      "name": "@disk-analyzer/napi",
+      "platforms": ["win32-x64-msvc", "linux-x64-gnu"]
+    },
+    "triples": {
+      "defaults": false,
+      "additional": ["x86_64-pc-windows-msvc", "x86_64-unknown-linux-gnu"]
+    }
+  },
+  "scripts": {
+    "build:debug": "napi build --platform",
+    "build:release": "napi build --platform --release",
+    "dev": "napi build --platform --watch",
+    "build": "pnpm run build:release",
+    "lint": "biome check src/ || true",
+    "typecheck": "tsc --noEmit index.d.ts 2>/dev/null || true",
+    "test:unit": "echo 'napi binding has no JS unit tests'",
+    "test": "pnpm typecheck"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0",
+    "typescript": "5.6.3"
+  }
+}

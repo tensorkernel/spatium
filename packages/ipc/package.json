@@ -1,0 +1,32 @@
+{
+  "name": "@disk-analyzer/ipc",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Canonical IPC contract types shared between the Electron renderer and main. Single source of truth per 02-SYSTEM-ARCHITECTURE.md §2.7.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./types": {
+      "types": "./src/types.ts",
+      "import": "./src/types.ts"
+    }
+  },
+  "scripts": {
+    "lint": "biome check src/",
+    "lint:fix": "biome check --write src/",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "echo 'no unit tests for pure-types package'",
+    "build": "echo 'no build step for pure-types package'",
+    "test": "pnpm typecheck"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3"
+  }
+}

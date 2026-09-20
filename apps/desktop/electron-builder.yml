@@ -1,0 +1,88 @@
+# Spatium electron-builder config.
+# Per 16-INSTALLER-AND-UPDATES.md.
+#
+# This produces an UNSIGNED Windows NSIS installer (.exe). Windows SmartScreen
+# will warn about the unsigned binary — the user can click "More info" →
+# "Run anyway" to install. Phase 6 production will sign with an Authenticode cert.
+
+appId: com.spatium.app
+productName: Spatium
+copyright: Copyright (c) 2026 Spatium Project
+
+# Build output: apps/desktop/dist/
+directories:
+  output: dist
+  buildResources: build
+
+# What to include in the app bundle
+files:
+  - out/main/**/*
+  - out/preload/**/*
+  - out/renderer/**/*
+  - package.json
+  - node_modules/**/*
+  - resources/**/*
+  - '!node_modules/**/README.md'
+  - '!node_modules/**/README'
+  - '!node_modules/**/CHANGELOG.md'
+  - '!node_modules/**/LICENSE'
+  - '!node_modules/**/.bin'
+  - '!**/*.map'
+  - '!**/*.ts'
+
+# Extra resources — the native .node binary + fonts + icons
+extraResources:
+  - from: ../../crates/napi/disk-analyzer-napi.win32-x64-msvc.node
+    to: native/disk-analyzer-napi.win32-x64-msvc.node
+    filter: ['**/*']
+  - from: ../../crates/napi/index.js
+    to: native/index.js
+  - from: ../../crates/napi/index.d.ts
+    to: native/index.d.ts
+
+# Windows target: NSIS installer (.exe)
+# Per 16-INSTALLER-AND-UPDATES.md §16.3: per-user default install.
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  # Per §16.6: no certificate = unsigned build. Phase 6 will add cert.
+  # certificateFile: ''
+  # certificatePassword: ''
+  # signtoolOptions:
+  #   additionalCertificateHash: ''
+
+# NSIS installer configuration
+# Per 16-INSTALLER-AND-UPDATES.md §16.3.1: minimal UX.
+nsis:
+  oneClick: false              # show the install dialog
+  perMachine: false            # per-user install (no admin required)
+  allowToChangeInstallationDirectory: true
+  allowElevation: true         # allow elevation if user picks per-machine
+  installerIcon: build/installer-icon.ico
+  uninstallerIcon: build/uninstaller-icon.ico
+  installerHeaderIcon: build/installer-header-icon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Spatium
+  # Per §16.8: uninstall keeps user data by default
+  deleteAppDataOnUninstall: false
+  # The installer title shown to the user
+  installerLanguages:
+    - en-US
+  language: 1033  # English
+
+# Linux target (for dev testing on Ubuntu)
+linux:
+  target:
+    - target: AppImage
+      arch: [x64]
+  category: Utility
+  maintainer: 4011umar@gmail.com
+
+# Metadata for the installer
+publish:
+  provider: github
+  owner: tensorkernel
+  repo: spatium
+  releaseType: release

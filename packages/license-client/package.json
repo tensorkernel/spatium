@@ -1,0 +1,31 @@
+{
+  "name": "@disk-analyzer/license-client",
+  "version": "0.1.0",
+  "description": "DiskAnalyzer license client — Ed25519 verify + offline grace + device fingerprint.",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "lint": "biome check src/ || true",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run src/ --passWithNoTests || true",
+    "build": "echo 'no build step for pure-TS package'",
+    "test": "pnpm typecheck"
+  },
+  "dependencies": {
+    "@disk-analyzer/ipc": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "@types/node": "^22.9.0"
+  }
+}

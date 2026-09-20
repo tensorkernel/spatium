@@ -1,0 +1,49 @@
+{
+  "//": "Spatium MSIX manifest (Phase 7 stub). Per 16-INSTALLER-AND-UPDATES.md §16.10, MSIX is a secondary distribution channel (Microsoft Store). Not built at launch.",
+  "$schema": "https://schemas.microsoft.com/appx/manifest/schema.json",
+  "Package": {
+    "Identity": {
+      "Name": "SpatiumProject.Spatium",
+      "Publisher": "CN=Spatium Project",
+      "Version": "0.2.0.0",
+      "ProcessorArchitecture": "x64"
+    },
+    "Properties": {
+      "DisplayName": "Spatium",
+      "Description": "A modern, fast, paid Windows disk analyzer.",
+      "PublisherDisplayName": "Spatium Project",
+      "Logo": "resources/icons/store-logo.png"
+    },
+    "Resources": {
+      "Resource": [{ "Language": "en-us" }]
+    },
+    "Dependencies": {
+      "TargetDeviceFamily": [
+        {
+          "Name": "Windows.Desktop",
+          "MinVersion": "10.0.22000.0",
+          "MaxVersionTested": "10.0.26100.0"
+        }
+      ]
+    },
+    "Capabilities": {
+      "Capability": [{ "Name": "internetClient" }, { "Name": "broadFileSystemAccess" }]
+    },
+    "Applications": {
+      "Application": [
+        {
+          "Id": "Spatium",
+          "Executable": "Spatium.exe",
+          "EntryPoint": "Windows.FullTrustApplication",
+          "VisualElements": {
+            "DisplayName": "Spatium",
+            "Description": "A modern, fast Windows disk analyzer.",
+            "BackgroundColor": "#0F1115",
+            "Square150x150Logo": "resources/icons/square-150.png",
+            "Square44x44Logo": "resources/icons/square-44.png"
+          }
+        }
+      ]
+    }
+  }
+}

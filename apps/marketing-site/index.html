@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spatium — A modern Windows disk analyzer</title>
+    <meta name="description" content="Spatium is a modern, fast, paid Windows disk analyzer with treemap, sunburst, age-map, and more. Built on Rust + Electron + React." />
+    <style>
+      :root {
+        --bg: #0F1115;
+        --bg-elevated: #161A21;
+        --bg-elevated-2: #1C2129;
+        --text-primary: #E6E9EF;
+        --text-secondary: #9BA3AF;
+        --text-tertiary: #6B7280;
+        --accent: #3B82F6;
+        --accent-hover: #2563EB;
+        --warning: #F59E0B;
+        --danger: #EF4444;
+        --success: #10B981;
+        --border: #2A313D;
+        --radius: 8px;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text-primary);
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+      header { padding: 20px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; }
+      header .container { display: flex; align-items: center; justify-content: space-between; }
+      header h1 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+      header .nav { display: flex; gap: 16px; align-items: center; }
+      header .nav a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color 0.15s; }
+      header .nav a:hover { color: var(--text-primary); }
+      .btn { display: inline-block; padding: 8px 16px; border-radius: var(--radius); font-weight: 500; font-size: 14px; text-decoration: none; transition: background 0.15s; border: 1px solid transparent; }
+      .btn-primary { background: var(--accent); color: white; }
+      .btn-primary:hover { background: var(--accent-hover); }
+      .btn-secondary { background: transparent; color: var(--text-primary); border-color: var(--border); }
+      .btn-secondary:hover { background: var(--bg-elevated-2); }
+      .hero { padding: 96px 0 64px; text-align: center; }
+      .hero h2 { font-size: 48px; line-height: 1.15; margin: 0 0 16px; font-weight: 700; letter-spacing: -0.02em; }
+      .hero p { font-size: 18px; color: var(--text-secondary); max-width: 640px; margin: 0 auto 32px; }
+      .hero .cta { display: flex; gap: 12px; justify-content: center; }
+      .features { padding: 64px 0; border-top: 1px solid var(--border); }
+      .features h3 { text-align: center; font-size: 32px; margin: 0 0 48px; font-weight: 600; }
+      .features .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+      .features .card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+      .features .card h4 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
+      .features .card p { margin: 0; color: var(--text-secondary); font-size: 14px; }
+      .pricing { padding: 64px 0; border-top: 1px solid var(--border); }
+      .pricing h3 { text-align: center; font-size: 32px; margin: 0 0 48px; font-weight: 600; }
+      .pricing .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 760px; margin: 0 auto; }
+      .pricing .card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; text-align: center; }
+      .pricing .card.featured { border-color: var(--accent); }
+      .pricing .card .tier { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-tertiary); }
+      .pricing .card .price { font-size: 36px; font-weight: 700; margin: 12px 0; }
+      .pricing .card .price .unit { font-size: 16px; color: var(--text-secondary); font-weight: 400; }
+      .pricing .card ul { list-style: none; padding: 0; margin: 24px 0; text-align: left; }
+      .pricing .card ul li { padding: 4px 0; color: var(--text-secondary); font-size: 14px; }
+      .pricing .card ul li::before { content: '✓'; color: var(--success); margin-right: 8px; }
+      footer { padding: 32px 0; border-top: 1px solid var(--border); text-align: center; color: var(--text-tertiary); font-size: 13px; }
+      footer a { color: var(--text-secondary); text-decoration: none; margin: 0 12px; }
+      footer a:hover { color: var(--text-primary); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Spatium</h1>
+        <nav class="nav">
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#download">Download</a>
+          <a href="https://github.com/tensorkernel/spatium">GitHub</a>
+          <a class="btn btn-primary" href="#download">Get Spatium</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <h2>Reclaim your space.</h2>
+        <p>A modern, fast, paid Windows disk analyzer. Rust-powered scanning, NTFS-aware size accounting, beautiful treemap and sunburst visualizations, history diffs, cleanup staging, and more.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#download">Download for Windows</a>
+          <a class="btn btn-secondary" href="https://github.com/tensorkernel/spatium">View source on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="container">
+        <h3>Why Spatium?</h3>
+        <div class="grid">
+          <div class="card"><h4>Fast, parallel scans</h4><p>Rust engine + rayon parallel traversal scans a 10-million-file volume in under 60 seconds on a mid-range NVMe SSD.</p></div>
+          <div class="card"><h4>NTFS truth</h4><p>Allocated vs. logical size, sparse-file awareness, hard-link detection, reparse-point handling. Don't be fooled by phantom size.</p></div>
+          <div class="card"><h4>History + diff</h4><p>"What grew 18 GB since last week?" — SQLite-backed scan history with diff. Free tools have no memory.</p></div>
+          <div class="card"><h4>Cleanup staging</h4><p>Non-destructive "Add to Cleanup" staging area. Review, deselect, then commit to Recycle Bin. No accidental deletes.</p></div>
+          <div class="card"><h4>Quick Wins</h4><p>Algorithmically-surfaced high-impact low-effort cleanup candidates (caches, logs, stale downloads, large unused installers).</p></div>
+          <div class="card"><h4>Power-user UX</h4><p>Three-column shell, command palette (Ctrl+K), keyboard navigation, dark mode default, accessible contrast.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <h3>Pricing</h3>
+        <div class="grid">
+          <div class="card">
+            <div class="tier">Free</div>
+            <div class="price">$0</div>
+            <ul>
+              <li>Unlimited scans</li>
+              <li>Treemap, sunburst, folder grid</li>
+              <li>Top-N largest files</li>
+              <li>File-type breakdown</li>
+              <li>Quick Wins: 3 of N</li>
+              <li>Cleanup staging: 5 items</li>
+            </ul>
+            <a class="btn btn-secondary" href="#download">Download</a>
+          </div>
+          <div class="card featured">
+            <div class="tier">Pro — Yearly</div>
+            <div class="price">$24<span class="unit">/year</span></div>
+            <ul>
+              <li>Everything in Free, plus:</li>
+              <li>Duplicate detection</li>
+              <li>Historical scans + diff</li>
+              <li>Age-map, scheduled scans</li>
+              <li>CSV / JSON / HTML export</li>
+              <li>NTFS advanced view</li>
+              <li>CLI (headless scan to JSON)</li>
+              <li>3 devices</li>
+            </ul>
+            <a class="btn btn-primary" href="#buy-yearly">Buy yearly</a>
+          </div>
+          <div class="card">
+            <div class="tier">Pro — Lifetime</div>
+            <div class="price">$79<span class="unit">one-time</span></div>
+            <ul>
+              <li>Everything in Pro Yearly, plus:</li>
+              <li>Current major version + 1 year of updates</li>
+              <li>Minor updates free forever</li>
+              <li>Major version upgrades optional paid</li>
+              <li>3 devices</li>
+            </ul>
+            <a class="btn btn-primary" href="#buy-lifetime">Buy lifetime</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="download">
+      <div class="container" style="text-align: center;">
+        <h3>Download</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 32px;">Spatium is in pre-release. The current build is a development snapshot.</p>
+        <a class="btn btn-primary" href="https://github.com/tensorkernel/spatium/releases">Latest release on GitHub</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <a href="https://github.com/tensorkernel/spatium">GitHub</a>
+        <a href="mailto:4011umar@gmail.com">Support</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/eula">EULA</a>
+        <p style="margin-top: 16px;">© 2026 Spatium Project. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

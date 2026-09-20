@@ -1,0 +1,100 @@
+/** @type {import('tailwindcss').Config} */
+// Per 09-DESIGN-SYSTEM.md.
+module.exports = {
+  content: [
+    './index.html',
+    './src/**/*.{ts,tsx}',
+    '../../packages/ui/src/**/*.{ts,tsx}',
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        canvas: 'var(--bg-canvas)',
+        surface: {
+          DEFAULT: 'var(--bg-surface)',
+          2: 'var(--bg-surface-2)',
+          3: 'var(--bg-surface-3)',
+          elevated: 'var(--bg-elevated)',
+        },
+        text: {
+          DEFAULT: 'var(--text-primary)',
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          tertiary: 'var(--text-tertiary)',
+          inverse: 'var(--text-inverse)',
+        },
+        border: {
+          DEFAULT: 'var(--border-default)',
+          subtle: 'var(--border-subtle)',
+          strong: 'var(--border-strong)',
+        },
+        accent: {
+          DEFAULT: 'var(--accent-primary)',
+          primary: 'var(--accent-primary)',
+          'primary-hover': 'var(--accent-primary-hover)',
+          'primary-fg': 'var(--accent-primary-fg)',
+          warning: 'var(--accent-warning)',
+          danger: 'var(--accent-danger)',
+          success: 'var(--accent-success)',
+          info: 'var(--accent-info)',
+        },
+        cat: {
+          1: 'var(--cat-1)',
+          2: 'var(--cat-2)',
+          3: 'var(--cat-3)',
+          4: 'var(--cat-4)',
+          5: 'var(--cat-5)',
+          6: 'var(--cat-6)',
+          7: 'var(--cat-7)',
+          8: 'var(--cat-8)',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter Variable', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono Variable', 'JetBrains Mono', 'ui-monospace', 'monospace'],
+      },
+      borderRadius: {
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        '2xl': 'var(--radius-2xl)',
+      },
+      boxShadow: {
+        sm: 'var(--shadow-sm)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+      },
+      spacing: {
+        px: 'var(--space-px)',
+        '0.5': 'var(--space-0_5)',
+        1: 'var(--space-1)',
+        '1.5': 'var(--space-1_5)',
+        2: 'var(--space-2)',
+        3: 'var(--space-3)',
+        4: 'var(--space-4)',
+        5: 'var(--space-5)',
+        6: 'var(--space-6)',
+        8: 'var(--space-8)',
+        10: 'var(--space-10)',
+        12: 'var(--space-12)',
+        16: 'var(--space-16)',
+        20: 'var(--space-20)',
+        24: 'var(--space-24)',
+      },
+      transitionDuration: {
+        fast: 'var(--motion-duration-fast)',
+        base: 'var(--motion-duration-base)',
+        slow: 'var(--motion-duration-slow)',
+        slower: 'var(--motion-duration-slower)',
+      },
+      transitionTimingFunction: {
+        out: 'var(--motion-ease-out)',
+        in: 'var(--motion-ease-in)',
+        'in-out': 'var(--motion-ease-in-out)',
+      },
+    },
+  },
+  plugins: [require('tailwindcss-animate')],
+};

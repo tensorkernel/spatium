@@ -1,0 +1,46 @@
+{
+  "name": "@disk-analyzer/desktop",
+  "version": "0.2.0",
+  "description": "Spatium — A modern, fast Windows disk analyzer (Electron + React + TS + Vite + Rust core).",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "lint": "biome check src/ preload/ renderer/ || true",
+    "lint:fix": "biome check --write src/ preload/ renderer/",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run src/ --passWithNoTests || true",
+    "test:e2e": "echo 'Phase 3: Playwright e2e not yet configured'",
+    "test": "pnpm typecheck && pnpm test:unit",
+    "package:win": "electron-vite build && electron-builder --win nsis --config electron-builder.yml",
+    "package:linux": "electron-vite build && electron-builder --linux AppImage --config electron-builder.yml",
+    "package": "electron-vite build && electron-builder --config electron-builder.yml"
+  },
+  "dependencies": {
+    "@disk-analyzer/ipc": "workspace:*",
+    "@disk-analyzer/license-client": "workspace:*",
+    "@disk-analyzer/napi": "workspace:*",
+    "@disk-analyzer/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "electron": "^33.0.0",
+    "electron-builder": "^26.0.0",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.4.47",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.14",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "5.6.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  }
+}

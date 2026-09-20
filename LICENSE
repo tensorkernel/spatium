@@ -1,0 +1,83 @@
+# Spatium License
+
+Copyright (c) 2026 Spatium Project. All rights reserved.
+
+## Software License
+
+**Spatium is closed-source commercial software.** All source code in this repository is the property of the Spatium Project and is licensed to end-users under the terms below.
+
+### Grant
+
+Subject to a valid license entitlement (per `13-LICENSING-SERVER.md` and `14-LICENSING-CLIENT.md`), the Spatium Project grants you a non-exclusive, non-transferable, non-sublicensable license to:
+
+1. Install and run the Spatium desktop application on up to `max_devices` (typically 3) devices that you own or control.
+2. Use the features enumerated in your entitlement's `features` array.
+3. Make backup copies of the application for archival purposes.
+
+### Restrictions
+
+You may NOT:
+
+1. Redistribute the application or any of its components without written permission.
+2. Reverse engineer, decompile, or disassemble the application, except to the extent that such restriction is expressly prohibited by applicable law.
+3. Modify, adapt, or create derivative works of the application.
+4. Bypass or attempt to bypass the license capability checks (per `15-SECURITY-ARCHITECTURE.md`).
+5. Use the application for any commercial purpose without a "Pro" tier entitlement.
+6. Resell, rent, lease, or sublicense the application.
+
+### Termination
+
+This license terminates automatically if you fail to comply with any term. Upon termination, you must destroy all copies of the application.
+
+### Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Tiers
+
+Per `01-PRODUCT-VISION.md` §1.6:
+
+| Tier | Price (USD, indicative) | Term | Notes |
+|---|---|---|---|
+| Free | $0 | perpetual | Discovery experience with capability limits |
+| Pro Yearly | $24 / year | 1 year, auto-renew optional | All Pro features, 3 devices |
+| Pro Lifetime | $79 one-time | perpetual, current major version + 1 year of updates | All Pro features for current major version + 1 year of updates; minor updates free forever; major version upgrades optional paid |
+
+## Third-Party Licenses
+
+Spatium bundles the following third-party software. Each is governed by its respective license; consult `THIRD-PARTY-LICENSES.md` (generated at build time) for the full list.
+
+- **Inter** typeface — SIL Open Font License 1.1
+- **JetBrains Mono** typeface — Apache 2.0
+- **Lucide** icons — ISC
+- **Rust** (toolchain) — MIT/Apache-2.0
+- **Electron** — MIT
+- **React** — MIT
+- **Vite** — MIT
+- **Tailwind CSS** — MIT
+- **TanStack Table / Virtual / Query** — MIT
+- **shadcn/ui** — MIT
+- **Radix UI** — MIT
+- **Recharts** — MIT
+- **Fastify** — MIT
+- **better-sqlite3** — MIT
+- **napi-rs** — MIT
+- **windows-rs** — MIT/Apache-2.0
+- **rusqlite / SQLite** — MIT / Public Domain
+- **ed25519-dalek** — BSD-3-Clause
+- **ring** — MIT/Apache-2.0
+- **sha2 / xxhash-rust** — MIT/Apache-2.0 / Apache-2.0
+- **rayon** — MIT/Apache-2.0
+- **tokio** — MIT
+- **parking_lot** — MIT/Apache-2.0
+- **hashbrown** — MIT/Apache-2.0
+- **ahash** — MIT/Apache-2.0
+- **tracing** — MIT
+- **thiserror** — MIT/Apache-2.0
+- **smallvec** — MIT/Apache-2.0
+- **once_cell** — MIT/Apache-2.0
+- **criterion** — MIT/Apache-2.0
+- **proptest** — MIT/Apache-2.0
+- **loom** — MIT/Apache-2.0
+
+All compatible with closed-source commercial distribution.

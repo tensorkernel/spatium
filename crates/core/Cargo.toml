@@ -1,0 +1,118 @@
+# DiskAnalyzer Core — the Rust engine
+# Per 02-SYSTEM-ARCHITECTURE.md §2.6, 05-RUST-CORE-ENGINE.md §5.1.
+#
+# This crate is the Windows/filesystem layer (Layer C). It contains:
+#   - scan/      : filesystem traversal (Phase 1: single-threaded; Phase 2: rayon parallel)
+#   - aggregate/ : arena tree, string pool, top-N, extension histogram
+#   - ntfs/      : NTFS-specific (Phase 2)
+#   - db/        : SQLite persistence (Phase 2)
+#   - dedup/     : duplicate detection pipeline (Phase 2)
+#   - crypto/    : license signature verify (Phase 4)
+#   - util/      : cancellation, path normalization, loop detection
+#
+# Per 05-RUST-CORE-ENGINE.md §5.10 (panic = "abort" in release) and §5.11
+# (every unsafe block has a // SAFETY: comment).
+
+[package]
+name = "disk-analyzer-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+description = "DiskAnalyzer core engine: parallel filesystem scanner, NTFS-aware aggregator, SQLite persistence, and license signature verification."
+repository.workspace = true
+homepage.workspace = true
+
+[lib]
+name = "disk_analyzer_core"
+path = "src/lib.rs"
+crate-type = ["rlib"]
+
+[features]
+default = ["db", "dedup"]
+# Phase 2: NTFS-specific Windows API calls (gated because they only build on Windows).
+# On non-Windows targets, the ntfs module provides a cross-platform simulation.
+ntfs = []
+# Phase 2: SQLite persistence (default-on from Phase 2)
+db = ["dep:rusqlite"]
+# Phase 4: License signature verification
+crypto = ["dep:ed25519-dalek", "dep:ring"]
+# Phase 2: USN Journal (requires NTFS; simulation on non-Windows)
+usn = ["ntfs"]
+# Phase 2: Duplicate detection
+dedup = ["dep:sha2"]
+# Property testing (gated by feature)
+proptest = []
+# Concurrency testing (gated by feature)
+loom = []
+
+[dependencies]
+# Always available (Phase 1)
+smallvec = { workspace = true }
+hashbrown = { workspace = true }
+ahash = { workspace = true }
+parking_lot = { workspace = true }
+thiserror = { workspace = true }
+once_cell = { workspace = true }
+tracing = { workspace = true }
+xxhash-rust = { workspace = true }
+hex = { workspace = true }
+
+# Phase 2+ (always-on; rayon/tokio are needed for the scan worker)
+rayon = { workspace = true }
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "sync", "time", "io-util"] }
+rusqlite = { workspace = true, optional = true }
+sha2 = { workspace = true, optional = true }
+
+# Phase 4 (optional)
+ed25519-dalek = { workspace = true, optional = true }
+ring = { workspace = true, optional = true }
+
+# Windows API (Phase 2+). Only built when the `ntfs` feature is enabled AND we're on Windows.
+# Per 17-WINDOWS-SPECIFIC-FEATURES.md.
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", optional = true, features = [
+    "Win32_Storage_FileSystem",
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_IO",
+    "Win32_System_SystemServices",
+] }
+
+[dev-dependencies]
+proptest = { version = "1.5" }
+criterion = { version = "0.5", features = ["html_reports"] }
+tempfile = "3.13"
+loom = { version = "0.7", features = ["checkpoint"] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
+# (no platform-specific dev-deps yet)
+
+[[bench]]
+name = "bench_scan"
+harness = false
+path = "benches/bench_scan.rs"
+
+[lints.rust]
+# Per 05-RUST-CORE-ENGINE.md §5.11 and §20.2.5 RD-6.
+# These are restrictive; we accept the cost for safety.
+# `unsafe_op_in_unsafe_fn` requires explicit unsafe blocks inside unsafe fns.
+unsafe_op_in_unsafe_fn = "deny"
+rust_2018_idioms = "warn"
+unused_lifetimes = "warn"
+unused_import_braces = "warn"
+explicit_outlives_requirements = "warn"
+non_ascii_idents = "deny"
+
+[lints.clippy]
+# Per 20-QUALITY-GATES-AND-POVS.md §20.2.5 RD-6: no unwrap/expect in scan/aggregate code paths.
+unwrap_used = "warn"
+expect_used = "warn"
+panic = "warn"
+todo = "warn"
+dbg_macro = "warn"
+print_stdout = "warn"
+print_stderr = "warn"
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }

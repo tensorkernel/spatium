@@ -1,0 +1,164 @@
+/* ============================================================================ */
+/* DiskAnalyzer — Design Tokens (CSS Custom Properties)                         */
+/* ============================================================================ */
+/* Per 09-DESIGN-SYSTEM.md §9.2. The :root block holds light defaults; the .dark */
+/* class on <html> switches to dark. Switching theme is a class swap — instant.   */
+/* Tailwind (in apps/desktop/renderer) extends its colors from these vars so      */
+/* that `bg-surface` resolves to `var(--bg-surface)` in both themes.              */
+/* ============================================================================ */
+
+:root,
+.dark {
+  /* Surfaces */
+  --bg-canvas: #0f1115;
+  --bg-surface: #161a21;
+  --bg-surface-2: #1c2129;
+  --bg-surface-3: #232934;
+  --bg-elevated: #1a1f27;
+
+  /* Text */
+  --text-primary: #e6e9ef;
+  --text-secondary: #9ba3af;
+  --text-tertiary: #6b7280;
+  --text-inverse: #0f1115;
+
+  /* Borders */
+  --border-subtle: #1f2530;
+  --border-default: #2a313d;
+  --border-strong: #3d4452;
+
+  /* Accents */
+  --accent-primary: #3b82f6;
+  --accent-primary-hover: #2563eb;
+  --accent-primary-fg: #ffffff;
+  --accent-warning: #f59e0b;
+  --accent-danger: #ef4444;
+  --accent-success: #10b981;
+  --accent-info: #06b6d4;
+
+  /* Treemap categorical hues (8) — warm muted pastels per the design-system research */
+  --cat-1: #f4c2b0; /* Documents - peach */
+  --cat-2: #c5d8a8; /* Code - sage */
+  --cat-3: #bdd9e8; /* System - sky */
+  --cat-4: #d4c4e0; /* Media - lavender */
+  --cat-5: #f9e79f; /* Caches - pale yellow */
+  --cat-6: #f5d5cb; /* Downloads - coral */
+  --cat-7: #dfecd9; /* User data - moss */
+  --cat-8: #e8c9db; /* Apps - mauve */
+
+  /* Shadows (chrome only; never on data) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+
+  /* Mica fallback (Windows 10) */
+  --mica-tint: rgba(15, 17, 21, 0.7);
+
+  /* Spacing — 4px base grid */
+  --space-px: 1px;
+  --space-0_5: 2px;
+  --space-1: 4px;
+  --space-1_5: 6px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* Motion (animate transform + opacity only) */
+  --motion-duration-fast: 100ms;
+  --motion-duration-base: 150ms;
+  --motion-duration-slow: 250ms;
+  --motion-duration-slower: 400ms;
+  --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --motion-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Typography */
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo,
+    monospace;
+
+  /* Density (Comfortable default) */
+  --row-h: 32px;
+  --cell-pad: 6px;
+  --body-pad: 12px;
+}
+
+:root:not(.dark) {
+  --bg-canvas: #f6f6f8;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f0f1f4;
+  --bg-surface-3: #e7e9ed;
+  --bg-elevated: #ffffff;
+
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary: #b0b0b5;
+  --text-inverse: #ffffff;
+
+  --border-subtle: #eceef1;
+  --border-default: #d8dce0;
+  --border-strong: #b8bdc4;
+
+  --accent-primary: #3b82f6;
+  --accent-primary-hover: #2563eb;
+  --accent-primary-fg: #ffffff;
+  --accent-warning: #d97706;
+  --accent-danger: #dc2626;
+  --accent-success: #059669;
+  --accent-info: #0891b2;
+
+  /* Categorical hues (slightly more saturated for light bg) */
+  --cat-1: #e76f51;
+  --cat-2: #6a994e;
+  --cat-3: #4a86c5;
+  --cat-4: #9b6fb0;
+  --cat-5: #d4a017;
+  --cat-6: #e07a5f;
+  --cat-7: #588157;
+  --cat-8: #b567a1;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.1);
+
+  --mica-tint: rgba(255, 255, 255, 0.85);
+}
+
+/* Density modes — applied via class on <html> */
+.density-compact {
+  --row-h: 24px;
+  --cell-pad: 4px;
+  --body-pad: 8px;
+}
+.density-comfortable {
+  --row-h: 32px;
+  --cell-pad: 6px;
+  --body-pad: 12px;
+}
+.density-spacious {
+  --row-h: 40px;
+  --cell-pad: 8px;
+  --body-pad: 16px;
+}
+
+/* Numeric / tabular numerals — applied via .numeric class */
+.numeric {
+  font-feature-settings: 'tnum' 1, 'cv01' 1, 'cv03' 1, 'cv04' 1;
+  font-variant-numeric: tabular-nums;
+}

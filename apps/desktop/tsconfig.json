@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out",
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@disk-analyzer/ipc": ["../../packages/ipc/src/index.ts"],
+      "@disk-analyzer/ipc/*": ["../../packages/ipc/src/*"],
+      "@disk-analyzer/ui": ["../../packages/ui/src/index.ts"],
+      "@disk-analyzer/ui/*": ["../../packages/ui/src/*"],
+      "@disk-analyzer/license-client": ["../../packages/license-client/src/index.ts"],
+      "@disk-analyzer/license-client/*": ["../../packages/license-client/src/*"],
+      "@disk-analyzer/napi": ["../../crates/napi/index.d.ts"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "preload/**/*.ts",
+    "renderer/**/*.ts",
+    "renderer/**/*.tsx",
+    "../../packages/ipc/src/**/*.ts",
+    "../../packages/ui/src/**/*.ts",
+    "../../packages/ui/src/**/*.tsx",
+    "../../packages/license-client/src/**/*.ts"
+  ],
+  "exclude": ["node_modules", "out", "dist"]
+}

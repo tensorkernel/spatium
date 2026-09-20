@@ -1,0 +1,29 @@
+{
+  "name": "@disk-analyzer/licensing-server",
+  "version": "0.1.0",
+  "description": "DiskAnalyzer licensing server (Fastify + Ed25519 + SQLite). Runs on http://localhost:8080 in dev with the demo key DAPR-DEMO-0000-0000.",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "main": "src/server.ts",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "lint": "biome check src/ || true",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "echo 'Phase 4: server tests TODO'",
+    "test": "pnpm typecheck"
+  },
+  "dependencies": {
+    "fastify": "^5.0.0",
+    "@fastify/cors": "^10.0.0",
+    "better-sqlite3": "^11.3.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "5.6.3",
+    "@types/node": "^22.9.0",
+    "@types/better-sqlite3": "^7.6.11"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "app.name": "Spatium",
+  "app.tagline": "A modern, fast Windows disk analyzer",
+
+  "topbar.views.treemap": "Treemap",
+  "topbar.views.sunburst": "Sunburst",
+  "topbar.views.folderGrid": "Folder Grid",
+  "topbar.views.topN": "Top-N",
+  "topbar.views.donut": "File Types",
+  "topbar.views.ageMap": "Age Map",
+  "topbar.views.flame": "Flame",
+  "topbar.views.mindmap": "Mindmap",
+  "topbar.views.bubbles": "Bubbles",
+
+  "sidebar.diskStorage": "Disk Storage",
+  "sidebar.quickWins": "Quick Wins",
+  "sidebar.fileTypes": "File Types",
+
+  "inspector.title": "Inspector",
+  "inspector.noSelection": "No selection",
+  "inspector.actions.reveal": "Reveal in File Explorer",
+  "inspector.actions.addToCleanup": "Add to Cleanup",
+  "inspector.actions.copyPath": "Copy Path",
+  "inspector.actions.copyHash": "Copy Hash (SHA-256)",
+
+  "scan.start": "Scan",
+  "scan.cancel": "Cancel",
+  "scan.scanning": "Scanning…",
+  "scan.complete": "Scan complete",
+  "scan.cancelled": "Scan cancelled",
+  "scan.error": "Scan error",
+
+  "commandPalette.placeholder": "Type a command…",
+  "commandPalette.empty": "No commands match",
+
+  "settings.general": "General",
+  "settings.scan": "Scan",
+  "settings.license": "License",
+  "settings.updates": "Updates",
+  "settings.advanced": "Advanced",
+  "settings.about": "About",
+
+  "license.free": "Free",
+  "license.proYearly": "Pro Yearly",
+  "license.proLifetime": "Pro Lifetime",
+  "license.expired": "Expired",
+  "license.activate": "Activate",
+  "license.deactivate": "Deactivate",
+  "license.demoKey": "Demo key: DAPR-DEMO-0000-0000",
+
+  "statusBar.scanTime": "Scan: {{seconds}}s",
+  "statusBar.fileCount": "{{count}} files",
+  "statusBar.totalBytes": "{{bytes}}",
+  "statusBar.telemetry.on": "Telemetry: on",
+  "statusBar.telemetry.off": "Telemetry: off"
+}

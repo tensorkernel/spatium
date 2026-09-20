@@ -1,0 +1,90 @@
+# DiskAnalyzer — Rust workspace root
+# Per 02-SYSTEM-ARCHITECTURE.md §2.6 and 05-RUST-CORE-ENGINE.md §5.1.
+#
+# Member crates:
+#   - crates/core    : the Rust engine (scan, aggregate, ntfs, db, dedup, crypto, util)
+#   - crates/napi    : napi-rs binding exposing core to Node (workspace package: @disk-analyzer/napi)
+#   - crates/helper  : privileged helper (separate signed EXE) — Phase 5
+#
+# Forbidden (per 02 §2.10):
+#   - crates/core may not depend on apps/* or any Node code.
+#   - crates/helper may not depend on apps/desktop/src.
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/napi",
+]
+exclude = [
+    "crates/helper",  # Phase 5: separate signed EXE; built standalone
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+license = "UNLICENSED"
+rust-version = "1.78"
+authors = ["DiskAnalyzer Project"]
+repository = "https://github.com/disk-analyzer/disk-analyzer"
+homepage = "https://github.com/disk-analyzer/disk-analyzer"
+
+[workspace.dependencies]
+# Concurrency (per 05-RUST-CORE-ENGINE.md §5.3.4: rayon for parallel traversal, tokio only for channels/IO multiplexing)
+rayon = "1.10"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time", "io-util"] }
+
+# Memory / data structures
+smallvec = { version = "1.13", features = ["const_generics", "union"] }
+hashbrown = "0.15"
+ahash = "0.8"
+
+# Database (Phase 2)
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+# Cryptography (per 15-SECURITY-ARCHITECTURE.md §15.7: no custom crypto)
+ed25519-dalek = { version = "2.1", features = ["std"] }
+ring = "0.17"
+sha2 = "0.10"
+xxhash-rust = { version = "0.8", features = ["xxh64", "xxh3"] }
+hex = "0.4"
+
+# Logging (per 05-RUST-CORE-ENGINE.md §5.13)
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Utilities
+parking_lot = "0.12"
+thiserror = "1.0"
+once_cell = "1.20"
+crossbeam-channel = "0.5"
+
+# napi-rs (per 03-TECH-STACK-DECISIONS.md §3.6)
+napi = "2"
+napi-derive = "2"
+
+# Windows API (per 03-TECH-STACK-DECISIONS.md §3.3.1 and 17-WINDOWS-SPECIFIC-FEATURES.md)
+# Phase 1 defers NTFS specifics; this dep is used in Phase 2 crates/core/src/ntfs/.
+# We declare it here so member crates can opt in.
+# On non-Windows targets, the windows-rs crate is conditionally disabled in member crates.
+
+[profile.dev]
+opt-level = 0
+debug = true
+overflow-checks = true
+panic = "unwind"
+
+[profile.release]
+opt-level = 3
+debug = false
+strip = true            # symbol stripping per 15-SECURITY-ARCHITECTURE.md §15.8
+lto = "thin"
+codegen-units = 1
+panic = "abort"          # per 05-RUST-CORE-ENGINE.md §5.10 and 15-SECURITY-ARCHITECTURE.md §15.8
+overflow-checks = true
+
+[profile.bench]
+opt-level = 3
+debug = false
+lto = "thin"
+codegen-units = 1

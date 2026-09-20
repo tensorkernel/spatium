@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!--
+  Spatium — WiX Toolset 4 installer definition.
+  Per 16-INSTALLER-AND-UPDATES.md §16.7.
+
+  Phase 5 stub: the installer definition is in place; `wix build` will produce
+  a signed MSI when run on a Windows CI environment with the Spatium code-signing
+  certificate (per §16.6).
+
+  Variables (set via `wix build -d Version=... -d BuildDir=...`):
+    Version  = e.g., "1.0.0"
+    BuildDir = e.g., "apps/desktop/out"
+-->
+<Wix xmlns='http://wixtoolset.org/schemas/v4/wxs'>
+  <Package
+    Name='Spatium'
+    Manufacturer='Spatium Project'
+    Version='$(var.Version)'
+    Language='1033'
+    UpgradeCode='{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}'
+    InstallerVersion='500'>
+
+    <MajorUpgrade
+      DowngradeErrorMessage='A newer version of Spatium is already installed.' />
+    <Media Id='1' Cabinet='Spatium.cab' EmbedCab='yes' />
+
+    <!-- Per-user install by default (per §16.3). -->
+    <Property Id='ALLUSERS' Value='2' />
+    <Property Id='MSIINSTALLPERUSER' Value='1' />
+
+    <!-- Installation directory: %LocalAppData%\Programs\Spatium -->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+      <Directory Id='LocalAppDataFolder'>
+        <Directory Id='INSTALLDIR' Name='Spatium'>
+          <Directory Id='ResourcesDir' Name='resources'>
+            <Directory Id='FontsDir' Name='fonts' />
+            <Directory Id='IconsDir' Name='icons' />
+            <Directory Id='NativeDir' Name='app' />
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id='ProgramMenuFolder'>
+        <Directory Id='StartMenuDir' Name='Spatium' />
+      </Directory>
+
+      <Directory Id='DesktopFolder' Name='Desktop' />
+    </Directory>
+
+    <!-- ──────────────────────────────────────────────────────────── -->
+    <!-- Files -->
+    <!-- ──────────────────────────────────────────────────────────── -->
+
+    <Component Id='MainExe' Guid='{B1111111-2222-3333-4444-555555555555}' Directory='INSTALLDIR'>
+      <File Id='MainExeFile' Source='$(var.BuildDir)\Spatium.exe' KeyPath='yes' />
+    </Component>
+
+    <Component Id='NativeModule' Guid='{C2222222-3333-4444-5555-666666666666}' Directory='NativeDir'>
+      <File Id='NativeModuleFile' Source='$(var.BuildDir)\resources\app\native\disk-analyzer-napi.win32-x64-msvc.node' KeyPath='yes' />
+    </Component>
+
+    <Component Id='HelperExe' Guid='{D3333333-4444-5555-6666-777777777777}' Directory='INSTALLDIR'>
+      <File Id='HelperFile' Source='$(var.BuildDir)\helper.exe' KeyPath='yes' />
+    </Component>
+
+    <Component Id='Bootstrapper' Guid='{E4444444-5555-6666-7777-888888888888}' Directory='INSTALLDIR'>
+      <File Id='BootstrapperFile' Source='$(var.BuildDir)\bootstrapper.exe' KeyPath='yes' />
+    </Component>
+
+    <Component Id='InterFont' Guid='{F5555555-6666-7777-8888-999999999999}' Directory='FontsDir'>
+      <File Id='InterFontFile' Source='$(var.BuildDir)\resources\fonts\Inter-Variable.woff2' KeyPath='yes' />
+    </Component>
+    <Component Id='JetBrainsMonoFont' Guid='{A6666666-7777-8888-9999-AAAAAAAAAAAA}' Directory='FontsDir'>
+      <File Id='JetBrainsMonoFontFile' Source='$(var.BuildDir)\resources\fonts\JetBrains-Mono-Variable.woff2' KeyPath='yes' />
+    </Component>
+
+    <!-- ──────────────────────────────────────────────────────────── -->
+    <!-- Shortcuts -->
+    <!-- ──────────────────────────────────────────────────────────── -->
+
+    <Component Id='StartMenuShortcut' Guid='{B7777777-8888-9999-AAAA-BBBBBBBBBBBB}' Directory='StartMenuDir'>
+      <Shortcut Id='StartMenuShortcut'
+                Name='Spatium'
+                Target='[INSTALLDIR]bootstrapper.exe'
+                WorkingDirectory='INSTALLDIR'
+                Icon='AppIcon' />
+      <RemoveFolder Id='RemoveStartMenuDir' On='uninstall' />
+    </Component>
+
+    <Component Id='DesktopShortcut' Guid='{C8888888-9999-AAAA-BBBB-CCCCCCCCCCCC}' Directory='DesktopFolder'>
+      <Shortcut Id='DesktopShortcut'
+                Name='Spatium'
+                Target='[INSTALLDIR]bootstrapper.exe'
+                WorkingDirectory='INSTALLDIR'
+                Icon='AppIcon' />
+      <Condition>INSTALLDESKTOPSHORTCUT=1</Condition>
+      <RemoveFile Id='RemoveDesktopShortcut' Name='Spatium.lnk' On='uninstall' />
+    </Component>
+
+    <!-- ──────────────────────────────────────────────────────────── -->
+    <!-- Icons -->
+    <!-- ──────────────────────────────────────────────────────────── -->
+
+    <Icon Id='AppIcon' Source='$(var.BuildDir)\resources\icons\app.ico' />
+
+    <!-- ──────────────────────────────────────────────────────────── -->
+    <!-- UI: minimal install-mode dialog (per §16.3.1) -->
+    <!-- ──────────────────────────────────────────────────────────── -->
+
+    <UI>
+      <UIRef Id='WixUI_InstallDir' />
+      <Property Id='WIXUI_INSTALLDIR' Value='INSTALLDIR' />
+    </UI>
+
+    <!-- ──────────────────────────────────────────────────────────── -->
+    <!-- Feature -->
+    <!-- ──────────────────────────────────────────────────────────── -->
+
+    <Feature Id='Complete' Title='Spatium' Level='1' AllowAdvertise='no' Display='expand'>
+      <ComponentRef Id='MainExe' />
+      <ComponentRef Id='NativeModule' />
+      <ComponentRef Id='HelperExe' />
+      <ComponentRef Id='Bootstrapper' />
+      <ComponentRef Id='InterFont' />
+      <ComponentRef Id='JetBrainsMonoFont' />
+      <ComponentRef Id='StartMenuShortcut' />
+      <ComponentRef Id='DesktopShortcut' />
+    </Feature>
+  </Package>
+</Wix>

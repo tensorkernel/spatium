@@ -1,0 +1,6 @@
+[toolchain]
+# Per 03-TECH-STACK-DECISIONS.md §3.7: Rust 1.78+ MSRV.
+# The installed stable channel satisfies this; pin the channel for reproducibility.
+channel = "stable"
+components = ["rustfmt", "clippy"]
+profile = "minimal"

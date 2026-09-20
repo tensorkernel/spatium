@@ -1,0 +1,43 @@
+{
+  "name": "disk-analyzer-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "DiskAnalyzer — modern, fast, paid Windows disk analyzer (Electron + React + TS + Vite + Rust core). Codename only; public brand name TBD per docs/BRAND-NAMES.md.",
+  "license": "UNLICENSED",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "install:all": "pnpm install --frozen-lockfile",
+    "build": "pnpm -r --filter=!@disk-analyzer/licensing-server run build",
+    "build:native:debug": "pnpm --filter @disk-analyzer/napi run build:debug",
+    "build:native:release": "pnpm --filter @disk-analyzer/napi run build:release",
+    "dev": "pnpm dev:licensing-server & pnpm dev:desktop",
+    "dev:desktop": "pnpm --filter @disk-analyzer/desktop run dev",
+    "dev:licensing-server": "pnpm --filter @disk-analyzer/licensing-server run dev",
+    "dev:native": "pnpm --filter @disk-analyzer/napi run dev",
+    "lint": "biome check . && pnpm -r run lint",
+    "lint:fix": "biome check --write .",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test && cargo test --workspace --features proptest",
+    "test:rust": "cargo test --workspace --features proptest",
+    "test:unit": "pnpm -r run test:unit",
+    "test:e2e": "pnpm --filter @disk-analyzer/desktop run test:e2e",
+    "test:licensing": "pnpm --filter @disk-analyzer/licensing-server run dev & node scripts/test-licensing-flow.mjs",
+    "bench": "cargo bench --workspace",
+    "audit": "pnpm audit --audit-level=high && cargo deny check advisories bans licenses sources 2>/dev/null || cargo audit 2>/dev/null || echo 'cargo-deny not installed; run: cargo install cargo-deny'",
+    "string-scan": "node scripts/string-scan.js",
+    "depcheck:cycle": "node scripts/dep-cycle-check.js",
+    "cargo:fmt": "cargo fmt --all",
+    "cargo:fmt:check": "cargo fmt --all -- --check",
+    "cargo:clippy": "cargo clippy --all-targets --all-features -- -D warnings",
+    "cargo:deny": "cargo deny check 2>/dev/null || echo 'install cargo-deny: cargo install cargo-deny'"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "typescript": "5.6.3"
+  },
+  "workspaces": ["apps/*", "packages/*", "crates/napi"]
+}

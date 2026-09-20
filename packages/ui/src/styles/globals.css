@@ -1,0 +1,82 @@
+/* ============================================================================ */
+/* DiskAnalyzer — Global Styles                                                  */
+/* ============================================================================ */
+/* Loaded once by the renderer's index.html. Pulls in the design tokens and     */
+/* sets up the base font, scrollbar styling, focus rings, and the OS-level      */
+/* background tint (Mica fallback).                                              */
+/* ============================================================================ */
+
+@import './tokens.css';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: transparent; /* let Mica show through where the renderer doesn't paint */
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px; /* text-base */
+  line-height: 22px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Custom scrollbar — desktop feel, not "webby" */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+  background-clip: content-box;
+  border: 3px solid transparent;
+}
+
+/* Focus ring — visible on every focusable element (per §20.2.3 UX-7) */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--bg-canvas), 0 0 0 4px var(--accent-primary);
+}
+
+/* Disable the default blue focus ring on mouse focus (we want :focus-visible only) */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Skip-to-content link (a11y per §20.2.3 UX-7) */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+}
+.skip-link:focus {
+  top: 8px;
+}
+
+/* Selection */
+::selection {
+  background: var(--accent-primary);
+  color: var(--accent-primary-fg);
+}
